@@ -4,6 +4,7 @@ from atmbot.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
 TOKEN = bot_token
+
 bot = telegram.Bot(token=TOKEN)
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ def respond():
    if text == "/start":
        # print the welcoming message
        bot_welcome = """
-       Welcome to coolAvatar bot, the bot is using the service from http://avatars.adorable.io/ to generate cool looking avatars based on the name you enter so please enter a name and the bot will reply with an avatar for your name.
+       Welcome to atm finder bot, the bot is using ...
        """
        # send the welcoming message
        bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
@@ -50,6 +51,7 @@ def set_webhook():
     webHookURL = '{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN)
     print(webHookURL)
     s = bot.setWebhook(webHookURL)
+    
     if s:
        return "webhook setup ok"
     else:
