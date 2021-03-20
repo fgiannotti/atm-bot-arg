@@ -1,6 +1,6 @@
 from flask import Flask, request
 import telegram
-from telebot.credentials import bot_token, bot_user_name,URL
+from atmbot.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
 
@@ -62,7 +62,7 @@ def set_webhook():
 def index():
     return '.'
 
-    
+
 if __name__ == '__main__':
     # note the threaded arg which allow
     # your app to have more than one thread
