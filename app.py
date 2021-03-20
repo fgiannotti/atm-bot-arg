@@ -1,5 +1,6 @@
 from flask import Flask, request
 import telegram
+import re
 from atmbot.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
@@ -40,7 +41,8 @@ def respond():
            # reply with a photo to the name the user sent,
            # note that you can send photos by url and telegram will fetch it for you
            bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
-       except Exception:
+       except Exception as e:
+           print(e)
            # if things went wrong
            bot.sendMessage(chat_id=chat_id, text="There was a problem in the name you used, please enter different name", reply_to_message_id=msg_id)
 
