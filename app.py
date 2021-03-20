@@ -3,11 +3,10 @@ import telegram
 from atmbot.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
-
 TOKEN = bot_token
 bot = telegram.Bot(token=TOKEN)
 
-
+app = Flask(__name__)
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -46,24 +45,18 @@ def respond():
 
    return 'ok'
 
-
-@app.route('/setwebhook', methods=['GET', 'POST'])
+@app.route('/set_webhook', methods=['GET', 'POST'])
 def set_webhook():
-    # we use the bot object to link the bot to our app which live
-    # in the link provided by URL
-    s = bot.setWebhook('{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN))
-    # something to let us know things work
-    if s:
-        return "webhook setup ok"
-    else:
-        return "webhook setup failed"
+   s = bot.setWebhook('{URL}{HOOK}'.format(URL=URL, HOOK=TOKEN))
+   if s:
+       return "webhook setup ok"
+   else:
+       return "webhook setup failed"
 
 @app.route('/')
 def index():
-    return '.'
+   return '.'
 
 
 if __name__ == '__main__':
-    # note the threaded arg which allow
-    # your app to have more than one thread
-    app.run(threaded=True)
+   app.run(threaded=True)
