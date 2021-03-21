@@ -23,7 +23,7 @@ def SearchAll():
 
 	finally:
 		# closing database connection.
-		if connection:
+		if db:
 			cursor.close()
 			db.close()
 			print("[DAO][SearchALL] PostgreSQL connection is closed")
