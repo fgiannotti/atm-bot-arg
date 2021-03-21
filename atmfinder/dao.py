@@ -20,7 +20,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
             cos(radians(%s)) *
             cos(radians(%s))
               )
-        ) * 6371 * 2 * 1000 as distance, banco,ubicacion  from "cajeros-automaticos" as caj 
+        ) * 6371 * 2 * 1000 as distance, banco, ubicacion, lat, long  from "cajeros-automaticos" as caj 
         where red=%s AND asin(
           sqrt(
             sin(radians(caj.lat-%s)/2)^2 +
@@ -34,7 +34,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
         print(rows)
 
         for row in rows:
-            atm = ATM(name=row[1],address=row[2],dist=row[0])
+            atm = ATM(name=row[1],address=row[2],dist=row[0],lat=row[3],long=row[4])
             atms.append(atm)
     except (Exception, psycopg2.Error) as error:
         print("[DAO][SearchByNetwork] Error while fetching data from PostgreSQL", error)
