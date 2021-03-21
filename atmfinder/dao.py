@@ -36,9 +36,10 @@ def SearchByNetwork(lat:float, long:float, network:str):
   
 def getNetworkChosenForUser(chatID: int):
     ok = True
+    network = ""
     try:
         network = UsersNetworkMap[chatID]
-    except KeyError as e:
+    except KeyError:
         ok = False
     return ok, network
 
