@@ -81,7 +81,7 @@ def respond():
    if text == "/start":
       bot_welcome = """
       Welcome to atmFinder bot, this bot helps you find ATMs close to your location.
-      
+
          1. Specify Network (we only support "BANELCO" or "LINK") (commands banelco or link are available)
          2. Send your position to the bot, and it will post the closest 3 ATMs around a 500mts radius.
       """
@@ -97,7 +97,7 @@ def respond():
       except Exception:
          bot.sendMessage(chat_id=chat_id, text="Network save failed. Please try again.", reply_to_message_id=msg_id)
          return 'ok'
-      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
+      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Please end me your location.", reply_to_message_id=msg_id)
       return 'ok'
 
    elif "link" in text.lower():
@@ -107,7 +107,7 @@ def respond():
       except Exception:
          bot.sendMessage(chat_id=chat_id, text="Network save failed. Please try again.", reply_to_message_id=msg_id)
          return 'ok'
-      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
+      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Please send me your location.", reply_to_message_id=msg_id)
       return 'ok'
 
    elif "/network" in text.lower():
