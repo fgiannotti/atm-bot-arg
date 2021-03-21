@@ -28,4 +28,4 @@ def SearchAll():
 			db.close()
 			print("[DAO][SearchALL] PostgreSQL connection is closed")
    
-	return records
+	return atms
