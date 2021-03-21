@@ -35,12 +35,17 @@ def SearchByNetwork(lat:float, long:float, network:str):
   
   
 def getNetworkChosenForUser(chatID: int):
-    return UsersNetworkMap[chatID]
+    ok = True
+    try:
+        network = UsersNetworkMap[chatID]
+    except KeyError as e:
+        ok = False
+    return ok, network
 
 def setNetworkChosenForUser(network: str, chatID:int):
     UsersNetworkMap[chatID] = network
     return
-    
+
 def SearchAll():
     
     atms = []
