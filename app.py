@@ -10,7 +10,6 @@ TOKEN = bot_token
 
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
-dao.getDB()
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
