@@ -55,7 +55,11 @@ def respond():
             fullStr = 'Bank list: \n' + ' '.join([atm.name +" " + atm.address + " a " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
             if len(records) == 0:
                fullStr += "Nothing found."
-            else:
+
+         except Exception as e:
+            fullStr = "Something wrong happened looking for atms. Please try again" 
+
+         try:
                m = folium.Map(location=[message.latitue, message.longitude])
                tooltip = "Click me!"
 
@@ -65,8 +69,8 @@ def respond():
                
                bot.send_photo(chat_id=chat_id, photo=m._to_png())
          except Exception as e:
-            fullStr = "Something wrong happened looking for atms. Please try again" 
-
+            print("[Error] Generating map error")
+            
          bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:
