@@ -56,6 +56,7 @@ def respond():
          return 'ok'
       else:
          bot.sendMessage(chat_id=chat_id, text="no text or location given...", reply_to_message_id=msg_id)
+         return 'ok'
 
    #INITIAL HANDLER
    if text == "/start":
@@ -65,6 +66,7 @@ def respond():
       bot.sendChatAction(chat_id=chat_id, action="typing")
       time.sleep(2)
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
+      return 'ok'
 
    elif "banelco" in text.lower():
       print(message)

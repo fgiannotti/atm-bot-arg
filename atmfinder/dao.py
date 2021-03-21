@@ -21,7 +21,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
             cos(radians(%s))
               )
         ) * 6371 * 2 as distance, banco,ubicacion  from "cajeros-automaticos" as caj 
-        where red=%s asin(
+        where red=%s AND asin(
           sqrt(
             sin(radians(caj.lat-%s)/2)^2 +
             sin(radians(caj.long-%s)/2)^2 *
