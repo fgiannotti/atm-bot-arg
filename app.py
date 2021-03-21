@@ -41,13 +41,22 @@ def respond():
       time.sleep(1)
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
    elif "/banelco" in text.lower():
-        #call atm bot find atms
-        print(message)
-        records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "banelco")
-        print(records)
+      #call atm bot find atm
+      print(message)
+      if not message.location:
+         print("location not found")
+         bot.sendMessage(chat_id=chat_id, text="location not found", reply_to_message_id=msg_id)
+         return 'ok'
+      records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "banelco")
+      print(records)
    elif "/link" in text.lower():
-         records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "link")
-         print(records)
+      print(message)
+      if not message.location:
+         print("location not found")
+         bot.sendMessage(chat_id=chat_id, text="location not found", reply_to_message_id=msg_id)
+         return 'ok'
+      records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "link")
+      print(records)
 
    else:
       try:
