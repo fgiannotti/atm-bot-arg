@@ -18,14 +18,15 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
             cos(radians(%s))
               )
         ) * 6371 * 2 as distance, banco,ubicacion  from "cajeros-automaticos" as caj 
-        where asin(
+        where red=%s asin(
           sqrt(
             sin(radians(caj.lat-%s)/2)^2 +
             sin(radians(caj.long-%s)/2)^2 *
             cos(radians(%s)) *
             cos(radians(%s))
               )
-        ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,lat,long,lat,long])
+        ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
+
         rows = cursor.fetchall()
     except (Exception, psycopg2.Error) as error:
         print("[DAO][SearchByNetwork] Error while fetching data from PostgreSQL", error)
@@ -33,16 +34,17 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
     for row in rows:
         atm = ATM(name=row[1],address=row[2],dist=row[0])
         atms.append(atm)
+        
     return atms
   
   
 def get_network_chosen_for_user(chatID: int):
     ok = True
-    network = ""
+    network = "no-network"
     try:
         network = UsersNetworkMap[chatID]
-    except KeyError as e:
-        print("[WARN] network not found for chat ID " + str(chatID), e)
+    except KeyError:
+        print("[WARN] Network not found for chat ID "+ chatID + " NETWORK: {}".format(UsersNetworkMap))
         ok = False
     return ok, network
 

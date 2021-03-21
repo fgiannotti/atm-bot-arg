@@ -49,6 +49,7 @@ def respond():
             return 'ok'
          #NETWORK FOUND, SEARCH ATMs
          records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
+         print(records)
          fullStr = ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n" for atm in records])
          bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
@@ -74,21 +75,22 @@ def respond():
       dao.set_network_chosen_for_user("LINK",chat_id)
       bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
-
+   elif "/network" in text.lower():
+      _, network = dao.get_network_chosen_for_user(chat_id)
+      bot.send_message(chat_id=chat_id, text="Network found: "+network, reply_to_message_id=msg_id)
+      return 'ok'
    else:
       try:
-           # clear the message we got from any non alphabets
-           text = re.sub(r"\W", "_", text)
-           print(text)
-           # create the api link for the avatar based on http://avatars.adorable.io/
-           url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
-           # reply with a photo to the name the user sent,
-           # note that you can send photos by url and telegram will fetch it for you
-           bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
+         # clear the message we got from any non alphabets
+         text = re.sub(r"\W", "_", text)
+         url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
+
+         bot.sendMessage(chat_id=chat_id, text="Command not found. Have a random picture instead :)", reply_to_message_id=msg_id)
+         bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
       except Exception as e:
-           print(e)
-           # if things went wrong
-           bot.sendMessage(chat_id=chat_id, text="Command not found :)", reply_to_message_id=msg_id)
+         print(e)
+         # if things went wrong
+         bot.sendMessage(chat_id=chat_id, text="Command not found :)", reply_to_message_id=msg_id)
 
    return 'ok'
 
