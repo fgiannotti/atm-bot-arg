@@ -90,7 +90,7 @@ def respond():
    elif "banelco" in text.lower():
       print(message)
       try:
-         dao.set_network_chosen_for_user("LINK",chat_id)
+         dao.set_network_chosen_for_user("BANELCO",chat_id)
       except Exception:
          bot.sendMessage(chat_id=chat_id, text="Network save failed. Please try again.", reply_to_message_id=msg_id)
          return 'ok'
