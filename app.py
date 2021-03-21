@@ -32,7 +32,6 @@ def respond():
       text = message.text.encode('utf-8').decode()
    except Exception as e:
       print("[ERROR] enconding text message err",text)
-
    print("got text msg",text)
 
    # for debugging purposes only
@@ -42,7 +41,11 @@ def respond():
    # HANDLER FOR LOCATION
    if not message.text:
       if message.location:
-         network = dao.getNetworkChosenForUser(message.chat.id)
+         ok,network = dao.getNetworkChosenForUser(message.chat.id)
+         if not ok:
+            print("[ERROR] location found but no network has been chosen.")
+            bot.sendMessage(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
+            return 'ok'
          records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, network)
          print(records)
          bot.sendMessage(chat_id=chat_id, text="buscamos cositas", reply_to_message_id=msg_id)
@@ -62,10 +65,12 @@ def respond():
    elif "banelco" in text.lower():
       print(message)
       dao.setNetworkChosenForUser("BANELCO",chat_id)
+      bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
    elif "link" in text.lower():
       print(message)
       dao.setNetworkChosenForUser("LINK",chat_id)
+      bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
 
    else:
