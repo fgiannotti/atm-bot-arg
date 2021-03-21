@@ -15,12 +15,18 @@ app = Flask(__name__)
 def respond():
    # retrieve the message in JSON and then transform it to Telegram object
    update = telegram.Update.de_json(request.get_json(force=True), bot)
-
-   chat_id = update.message.chat.id
-   msg_id = update.message.message_id
+   
+   message = None
+   if update.edited_message:
+         message = update.edited_message
+   else:
+         message = update.message
+        
+   chat_id = message.chat.id
+   msg_id = message.message_id
 
    # Telegram understands UTF-8, so encode text for unicode compatibility
-   text = update.message.text.encode('utf-8').decode()
+   text = message.text.encode('utf-8').decode()
    # for debugging purposes only
    print("got text message :", text)
    # the first time you chat with the bot AKA the welcoming message
