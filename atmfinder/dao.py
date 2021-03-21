@@ -31,7 +31,8 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
         ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
 
         rows = cursor.fetchall()
-
+        print(records)
+        
         for row in rows:
             atm = ATM(name=row[1],address=row[2],dist=row[0])
             atms.append(atm)
