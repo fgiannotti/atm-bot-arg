@@ -3,6 +3,7 @@ import telegram
 import re
 import time
 import atmfinder.dao as dao
+from atmfinder.models import ATM
 from atmfinder.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
@@ -39,12 +40,15 @@ def respond():
       bot.sendChatAction(chat_id=chat_id, action="typing")
       time.sleep(1)
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
-   elif "/banelco" in text.lower() or "/link" in text.lower():
+   elif "/banelco" in text.lower():
         #call atm bot find atms
-        print("BANCOOOOS")
-        records = dao.SearchByNetwork()
+        print(message)
+        records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "banelco")
         print(records)
-        
+   elif "/link" in text.lower():
+         records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "link")
+         print(records)
+
    else:
       try:
            # clear the message we got from any non alphabets

@@ -1,8 +1,8 @@
 from atmfinder.models import ATM
 import psycopg2
 from psycopg2 import sql
-def SearchByNetwork(atm: ATM = None):
-    atm = []
+def SearchByNetwork(lat:float, long:float, network:str):
+    atms = []
     try:
         db = psycopg2.connect(dbname="dehk8k9ckm1b5r", user="ulnxxperftvpyj", password="9d6f464e63dc1b36466508b5a2d1c2b8cb172e20bc29677fd4556940491b7dc3", host="ec2-18-214-208-89.compute-1.amazonaws.com")
         cursor = db.cursor()
@@ -22,7 +22,7 @@ def SearchByNetwork(atm: ATM = None):
             cos(radians(%s)) *
             cos(radians(%s))
               )
-        ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[1,1,1,1,1,1,1,1])
+        ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,lat,long,lat,long])
         atms = cursor.fetchall()
 
     except (Exception, psycopg2.Error) as error:
