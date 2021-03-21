@@ -41,7 +41,8 @@ def get_network_chosen_for_user(chatID: int):
     network = ""
     try:
         network = UsersNetworkMap[chatID]
-    except KeyError:
+    except KeyError as e:
+        print("[WARN] network not found for chat ID " + str(chatID), e)
         ok = False
     return ok, network
 

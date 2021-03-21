@@ -47,8 +47,9 @@ def respond():
             print("[ERROR] location found but no network has been chosen.")
             bot.sendMessage(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
             return 'ok'
+         #NETWORK FOUND, SEARCH ATMs
          records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
-         fullStr = ' '.join([atm.name +"  " + atm.address + " " + atm.current_distance + "mts \n" for atm in records])
+         fullStr = ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n" for atm in records])
          bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:
