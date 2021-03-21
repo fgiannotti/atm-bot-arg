@@ -2,7 +2,10 @@ from atmfinder.models import ATM
 import psycopg2
 from psycopg2 import sql
 
-UsersNetworkMap = {}
+def initMap():
+    print("INIT MAP")
+    global UsersNetworkMap
+    UsersNetworkMap = {}
 
 def search_by_network(lat:float, long:float, network:str)->[ATM]:
     atms = []
@@ -28,13 +31,13 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
         ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
 
         rows = cursor.fetchall()
+
+        for row in rows:
+            atm = ATM(name=row[1],address=row[2],dist=row[0])
+            atms.append(atm)
     except (Exception, psycopg2.Error) as error:
         print("[DAO][SearchByNetwork] Error while fetching data from PostgreSQL", error)
     
-    for row in rows:
-        atm = ATM(name=row[1],address=row[2],dist=row[0])
-        atms.append(atm)
-
     return atms
   
   
