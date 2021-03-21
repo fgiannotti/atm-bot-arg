@@ -16,7 +16,7 @@ app = Flask(__name__)
 def respond():
    # retrieve the message in JSON and then transform it to Telegram object
    update = telegram.Update.de_json(request.get_json(force=True), bot)
-   
+   print(update)
    message = None
    if update.edited_message:
          message = update.edited_message
@@ -40,7 +40,7 @@ def respond():
       bot.sendChatAction(chat_id=chat_id, action="typing")
       time.sleep(1)
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
-   elif "/banelco" in text.lower():
+   elif "banelco" in text.lower():
       #call atm bot find atm
       print(message)
       if not message.location:
@@ -49,7 +49,7 @@ def respond():
          return 'ok'
       records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "banelco")
       print(records)
-   elif "/link" in text.lower():
+   elif "link" in text.lower():
       print(message)
       if not message.location:
          print("location not found")
