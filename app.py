@@ -46,17 +46,17 @@ def respond():
          #NETWORK NOT FOUND
          if not ok:
             print("[ERROR] location found but no network has been chosen.")
-            bot.send_message(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
+            bot.send_message(chat_id=chat_id, text="Please set up network first.", reply_to_message_id=msg_id)
             return 'ok'
          #NETWORK FOUND, SEARCH ATMs
          fullStr = ""
          try:
             records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
-            fullStr = 'Bank list: \n' + ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
+            fullStr = 'Bank list: \n' + ' '.join([atm.name +" " + atm.address + " a " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
             if len(records) == 0:
                fullStr += "Nothing found."
          except Exception as e:
-            fullStr = "Something wrong happened looking for atms." 
+            fullStr = "Something wrong happened looking for atms. Please try again" 
 
          bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
@@ -77,12 +77,12 @@ def respond():
    elif "banelco" in text.lower():
       print(message)
       dao.set_network_chosen_for_user("BANELCO",chat_id)
-      bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
+      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
    elif "link" in text.lower():
       print(message)
       dao.set_network_chosen_for_user("LINK",chat_id)
-      bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
+      bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
    elif "/network" in text.lower():
       _, network = dao.get_network_chosen_for_user(chat_id)
