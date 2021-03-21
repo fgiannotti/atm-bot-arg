@@ -2,6 +2,7 @@ from flask import Flask, request
 import telegram
 import re
 import time
+import folium
 import atmfinder.dao as dao
 from atmfinder.models import ATM
 from atmfinder.credentials import bot_token, bot_user_name,URL
@@ -54,6 +55,15 @@ def respond():
             fullStr = 'Bank list: \n' + ' '.join([atm.name +" " + atm.address + " a " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
             if len(records) == 0:
                fullStr += "Nothing found."
+            else:
+               m = folium.Map(location=[message.latitue, message.longitude])
+               tooltip = "Click me!"
+
+               folium.Marker(
+                  [records[0].lat,records[0].long], popup=records[0].address, tooltip=tooltip
+               ).add_to(m)
+               
+               bot.send_photo(chat_id=chat_id, photo=m._to_png())
          except Exception as e:
             fullStr = "Something wrong happened looking for atms. Please try again" 
 
