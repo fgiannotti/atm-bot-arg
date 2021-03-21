@@ -14,6 +14,7 @@ Steps to use:    (/start also introduces these steps)
 This bot uses webhooks instead of long polling for more efficiency.
 
 Next Steps:
+
     - Fix folium library to show map with markers
     - Encapsulate app logic into Handlers
     - Network chosen by user is saved forever in a postgresql. This should be done in a noSQL DB with a TTL.
