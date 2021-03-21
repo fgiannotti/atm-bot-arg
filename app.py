@@ -46,7 +46,7 @@ def respond():
          #NETWORK NOT FOUND
          if not ok:
             print("[ERROR] location found but no network has been chosen.")
-            bot.sendMessage(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
+            bot.send_message(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
             return 'ok'
          #NETWORK FOUND, SEARCH ATMs
          fullStr = ""
@@ -57,11 +57,12 @@ def respond():
                fullStr += "Nothing found."
          except Exception as e:
             fullStr = "Something wrong happened looking for atms." 
-            
-         bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
+
+         bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
+         bot.send_location()
          return 'ok'
       else:
-         bot.sendMessage(chat_id=chat_id, text="no text or location given...", reply_to_message_id=msg_id)
+         bot.send_message(chat_id=chat_id, text="no text or location given...", reply_to_message_id=msg_id)
          return 'ok'
 
    #INITIAL HANDLER

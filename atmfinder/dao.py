@@ -20,7 +20,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
             cos(radians(%s)) *
             cos(radians(%s))
               )
-        ) * 6371 * 2 as distance, banco,ubicacion  from "cajeros-automaticos" as caj 
+        ) * 6371 * 2 * 1000 as distance, banco,ubicacion  from "cajeros-automaticos" as caj 
         where red=%s AND asin(
           sqrt(
             sin(radians(caj.lat-%s)/2)^2 +
@@ -28,7 +28,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
             cos(radians(%s)) *
             cos(radians(%s))
               )
-        ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
+        ) * 6371 * 2 * 1000 <= 500 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
 
         rows = cursor.fetchall()
         print(rows)
