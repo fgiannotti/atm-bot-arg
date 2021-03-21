@@ -55,7 +55,6 @@ def respond():
       if not message.location:
          print("location not found")
          bot.sendMessage(chat_id=chat_id, text="Location not found", reply_to_message_id=msg_id)
-         bot.
          return 'ok'
       records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "link")
       print(records)
