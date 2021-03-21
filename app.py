@@ -3,13 +3,14 @@ import telegram
 import re
 import time
 from atmfinder.credentials import bot_token, bot_user_name,URL
+import atmfinder.dao as dao
 global bot
 global TOKEN
 TOKEN = bot_token
 
 bot = telegram.Bot(token=TOKEN)
-
 app = Flask(__name__)
+dao.init()
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -36,6 +37,7 @@ def respond():
    elif "/banelco" in text.lower() or "/link" in text.lower():
         #call atm bot find atms
         print("asd")
+        
    else:
       try:
            # clear the message we got from any non alphabets
