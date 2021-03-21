@@ -69,8 +69,8 @@ def respond():
                
                bot.send_photo(chat_id=chat_id, photo=m._to_png())
          except Exception as e:
-            print("[Error] Generating map error")
-            
+            print("[Error] Generating map error",e)
+
          bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:
