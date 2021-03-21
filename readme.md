@@ -15,11 +15,11 @@ This bot uses webhooks instead of long polling for more efficiency.
 
 Next Steps:
 
-    - Fix folium library to show map with markers
-    - Encapsulate app logic into Handlers
-    - Network chosen by user is saved forever in a postgresql. This should be done in a noSQL DB with a TTL.
-    - To have information about ATMs cash availability i would use a job process (each weekday 8 am) to re-fill all the ATMs.
-    - Unit tests
+- Fix folium library to show map with markers
+- Encapsulate app logic into Handlers
+- Network chosen by user is saved forever in a postgresql. This should be done in a noSQL DB with a TTL.
+- To have information about ATMs cash availability i would use a job process (each weekday 8 am) to re-fill all the ATMs.
+- Unit tests
 
 Python version used: 3.9
 
