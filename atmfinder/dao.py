@@ -2,10 +2,6 @@ from atmfinder.models import ATM
 import psycopg2
 from psycopg2 import sql
 
-def initMap():
-    print("INIT MAP")
-    global UsersNetworkMap
-    UsersNetworkMap = {}
 
 def search_by_network(lat:float, long:float, network:str)->[ATM]:
     atms = []
@@ -46,37 +42,47 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
 def get_network_chosen_for_user(chatID: int):
     ok = True
     network = "no-network"
-    try:
-        network = UsersNetworkMap[chatID]
-    except KeyError:
-        print("[WARN] Network not found for chat ID "+ str(chatID) + " NETWORK: {}".format(UsersNetworkMap))
-        ok = False
-    return ok, network
 
-def set_network_chosen_for_user(network: str, chatID:int):
-    UsersNetworkMap[chatID] = network
-    return
-
-def SearchAll():
-    
-    atms = []
     try:
         db = psycopg2.connect(dbname="dehk8k9ckm1b5r", user="ulnxxperftvpyj", password="9d6f464e63dc1b36466508b5a2d1c2b8cb172e20bc29677fd4556940491b7dc3", host="ec2-18-214-208-89.compute-1.amazonaws.com")
         cursor = db.cursor()
-        query = "select * from \"cajeros-automaticos\" limit 10"
-
+        query = "select network from \"users\" where chat_id={} order by id desc".format(chatID)
+        print(query)
         cursor.execute(query)
-        print("Selecting rows from mobile table using cursor.fetchall")
-        atms = cursor.fetchall()
+        network = cursor.fetchone()[0]
 
     except (Exception, psycopg2.Error) as error:
-        print("[DAO][SearchALL] Error while fetching data from PostgreSQL", error)
+        print("[DAO][get_network_chosen_for_user] Error while fetching data from PostgreSQL", error)
+        ok = False
 
     finally:
         # closing database connection.
         if db:
             cursor.close()
             db.close()
-            print("[DAO][SearchALL] PostgreSQL connection is closed")
-   
-    return atms
+            print("[DAO][get_network_chosen_for_user] PostgreSQL connection is closed")
+
+    return ok, network
+
+
+def set_network_chosen_for_user(network: str, chatID:int):
+
+    try:
+        db = psycopg2.connect(dbname="dehk8k9ckm1b5r", user="ulnxxperftvpyj", password="9d6f464e63dc1b36466508b5a2d1c2b8cb172e20bc29677fd4556940491b7dc3", host="ec2-18-214-208-89.compute-1.amazonaws.com")
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO users (chat_id, network) VALUES (%s, %s);", chatID, network)
+        network = cursor.fetchone()[0]
+
+    except (Exception, psycopg2.Error) as error:
+        print("[DAO][set_network_chosen_for_user] Error while fetching data from PostgreSQL", error)
+        raise
+
+    finally:
+        # closing database connection.
+        if db:
+            cursor.close()
+            db.close()
+            print("[DAO][set_network_chosen_for_user] PostgreSQL connection is closed")
+
+    return
+

@@ -11,7 +11,6 @@ TOKEN = bot_token
 
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
-dao.initMap()
 
 @app.route('/{}'.format(TOKEN), methods=['POST'])
 def respond():
@@ -76,18 +75,29 @@ def respond():
 
    elif "banelco" in text.lower():
       print(message)
-      dao.set_network_chosen_for_user("BANELCO",chat_id)
+      try:
+         dao.set_network_chosen_for_user("LINK",chat_id)
+      except Exception:
+         bot.sendMessage(chat_id=chat_id, text="Network save failed. Please try again.", reply_to_message_id=msg_id)
+         return 'ok'
       bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
+
    elif "link" in text.lower():
       print(message)
-      dao.set_network_chosen_for_user("LINK",chat_id)
+      try:
+         dao.set_network_chosen_for_user("LINK",chat_id)
+      except Exception:
+         bot.sendMessage(chat_id=chat_id, text="Network save failed. Please try again.", reply_to_message_id=msg_id)
+         return 'ok'
       bot.sendMessage(chat_id=chat_id, text="Network saved OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
+
    elif "/network" in text.lower():
       _, network = dao.get_network_chosen_for_user(chat_id)
       bot.send_message(chat_id=chat_id, text="Network found: "+network, reply_to_message_id=msg_id)
       return 'ok'
+
    else:
       try:
          # clear the message we got from any non alphabets
