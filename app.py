@@ -2,7 +2,7 @@ from flask import Flask, request
 import telegram
 import re
 import time
-from folium import Map
+import folium
 import atmfinder.dao as dao
 from atmfinder.models import ATM
 from atmfinder.credentials import bot_token, bot_user_name,URL
@@ -31,7 +31,7 @@ def respond():
    text = message.text
    try:
       text = message.text.encode('utf-8').decode()
-   except Exception:
+   except Exception as e:
       print("[WARN] enconding text message failed",text)
    print("got text msg",text)
 
@@ -56,10 +56,15 @@ def respond():
             if len(records) == 0:
                fullStr += "Nothing found."
             else:
-               m = Map(location=[message.latitue, message.longitude])
+               m = folium.Map(location=[message.latitue, message.longitude])
                tooltip = "Click me!"
+
+               folium.Marker(
+                  [records[0].lat,records[0].long], popup=records[0].address, tooltip=tooltip
+               ).add_to(m)
+               
                bot.send_photo(chat_id=chat_id, photo=m._to_png())
-         except Exception:
+         except Exception as e:
             fullStr = "Something wrong happened looking for atms. Please try again" 
 
          bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
