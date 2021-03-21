@@ -41,14 +41,15 @@ def respond():
    # HANDLER FOR LOCATION
    if not message.text:
       if message.location:
-         ok,network = dao.getNetworkChosenForUser(message.chat.id)
+         ok,network = dao.get_network_chosen_for_user(message.chat.id)
+         #NETWORK NOT FOUND
          if not ok:
             print("[ERROR] location found but no network has been chosen.")
             bot.sendMessage(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
             return 'ok'
-         records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, network)
-         print(records)
-         bot.sendMessage(chat_id=chat_id, text="buscamos cositas", reply_to_message_id=msg_id)
+         records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
+         fullStr = ' '.join([atm.name +"  " + atm.address + " " + atm.current_distance + "mts \n" for atm in records])
+         bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:
          bot.sendMessage(chat_id=chat_id, text="no text or location given...", reply_to_message_id=msg_id)
@@ -58,18 +59,18 @@ def respond():
       bot_welcome = """
       Welcome to atmFinder bot, this bots helps you find ATMs close to your location.
       """
-       # send the welcoming message
       bot.sendChatAction(chat_id=chat_id, action="typing")
-      time.sleep(1)
+      time.sleep(2)
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
+
    elif "banelco" in text.lower():
       print(message)
-      dao.setNetworkChosenForUser("BANELCO",chat_id)
+      dao.set_network_chosen_for_user("BANELCO",chat_id)
       bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
    elif "link" in text.lower():
       print(message)
-      dao.setNetworkChosenForUser("LINK",chat_id)
+      dao.set_network_chosen_for_user("LINK",chat_id)
       bot.sendMessage(chat_id=chat_id, text="OK. Send me your location please.", reply_to_message_id=msg_id)
       return 'ok'
 
