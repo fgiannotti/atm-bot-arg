@@ -49,8 +49,15 @@ def respond():
             bot.sendMessage(chat_id=chat_id, text="Need network first.", reply_to_message_id=msg_id)
             return 'ok'
          #NETWORK FOUND, SEARCH ATMs
-         records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
-         fullStr = 'Bank list: \n' + ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
+         fullStr = ""
+         try:
+            records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
+            fullStr = 'Bank list: \n' + ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
+            if len(records) == 0:
+               fullStr += "Nothing found."
+         except Exception as e:
+            fullStr = "Something wrong happened looking for atms." 
+            
          bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:

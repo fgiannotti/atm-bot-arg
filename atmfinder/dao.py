@@ -31,13 +31,14 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
         ) * 6371 * 2 <= 0.5 order by distance asc limit 3 """),[lat,long,lat,long,network,lat,long,lat,long])
 
         rows = cursor.fetchall()
-        print(records)
-        
+        print(rows)
+
         for row in rows:
             atm = ATM(name=row[1],address=row[2],dist=row[0])
             atms.append(atm)
     except (Exception, psycopg2.Error) as error:
         print("[DAO][SearchByNetwork] Error while fetching data from PostgreSQL", error)
+        raise
     
     return atms
   
