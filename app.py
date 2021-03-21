@@ -59,7 +59,6 @@ def respond():
             fullStr = "Something wrong happened looking for atms." 
 
          bot.send_message(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
-         bot.send_location()
          return 'ok'
       else:
          bot.send_message(chat_id=chat_id, text="no text or location given...", reply_to_message_id=msg_id)
