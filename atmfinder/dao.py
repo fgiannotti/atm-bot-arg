@@ -71,7 +71,6 @@ def set_network_chosen_for_user(network: str, chatID:int):
         db = psycopg2.connect(dbname="dehk8k9ckm1b5r", user="ulnxxperftvpyj", password="9d6f464e63dc1b36466508b5a2d1c2b8cb172e20bc29677fd4556940491b7dc3", host="ec2-18-214-208-89.compute-1.amazonaws.com")
         cursor = db.cursor()
         cursor.execute("INSERT INTO users (chat_id, network) VALUES (%s, %s)", (chatID, network))
-        network = cursor.fetchone()[0]
 
     except (Exception, psycopg2.Error) as error:
         print("[DAO][set_network_chosen_for_user] Error while fetching data from PostgreSQL", error)
