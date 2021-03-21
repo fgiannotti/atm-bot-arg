@@ -80,7 +80,10 @@ def respond():
    #INITIAL HANDLER
    if text == "/start":
       bot_welcome = """
-      Welcome to atmFinder bot, this bots helps you find ATMs close to your location.
+      Welcome to atmFinder bot, this bot helps you find ATMs close to your location.
+      
+         1. Specify Network (we only support "BANELCO" or "LINK") (commands banelco or link are available)
+         2. Send your position to the bot, and it will post the closest 3 ATMs around a 500mts radius.
       """
       bot.sendChatAction(chat_id=chat_id, action="typing")
       time.sleep(2)
