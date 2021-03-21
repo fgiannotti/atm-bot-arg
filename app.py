@@ -36,7 +36,9 @@ def respond():
       bot.sendMessage(chat_id=chat_id, text=bot_welcome, reply_to_message_id=msg_id)
    elif "/banelco" in text.lower() or "/link" in text.lower():
         #call atm bot find atms
-        print("asd")
+        print("BANCOOOOS")
+        records = dao.searchAll()
+        print(records)
         
    else:
       try:
