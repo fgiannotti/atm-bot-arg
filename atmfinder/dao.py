@@ -34,7 +34,7 @@ def search_by_network(lat:float, long:float, network:str)->[ATM]:
     for row in rows:
         atm = ATM(name=row[1],address=row[2],dist=row[0])
         atms.append(atm)
-        
+
     return atms
   
   
@@ -44,7 +44,7 @@ def get_network_chosen_for_user(chatID: int):
     try:
         network = UsersNetworkMap[chatID]
     except KeyError:
-        print("[WARN] Network not found for chat ID "+ chatID + " NETWORK: {}".format(UsersNetworkMap))
+        print("[WARN] Network not found for chat ID "+ str(chatID) + " NETWORK: {}".format(UsersNetworkMap))
         ok = False
     return ok, network
 

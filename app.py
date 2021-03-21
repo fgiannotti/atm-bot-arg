@@ -31,7 +31,7 @@ def respond():
    try:
       text = message.text.encode('utf-8').decode()
    except Exception as e:
-      print("[ERROR] enconding text message err",text)
+      print("[WARN] enconding text message failed",text)
    print("got text msg",text)
 
    # for debugging purposes only
@@ -50,7 +50,7 @@ def respond():
          #NETWORK FOUND, SEARCH ATMs
          records = dao.search_by_network(message.location.latitude,message.location.longitude, network)
          print(records)
-         fullStr = ' '.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n" for atm in records])
+         fullStr = 'Bank list: \n'.join([atm.name +"  " + atm.address + " " + str(int(atm.current_distance)) + "mts \n\n" for atm in records])
          bot.sendMessage(chat_id=chat_id, text=fullStr, reply_to_message_id=msg_id)
          return 'ok'
       else:
