@@ -1,6 +1,9 @@
 from atmfinder.models import ATM
 import psycopg2
 from psycopg2 import sql
+
+UsersNetworkMap = {}
+
 def SearchByNetwork(lat:float, long:float, network:str):
     atms = []
     try:
@@ -31,9 +34,13 @@ def SearchByNetwork(lat:float, long:float, network:str):
     return atms
   
   
-  
-  
-  
+def getNetworkChosenForUser(chatID: int):
+    return UsersNetworkMap[chatID]
+
+def setNetworkChosenForUser(network: str, chatID:int):
+    UsersNetworkMap[chatID] = network
+    return
+    
 def SearchAll():
     
     atms = []
