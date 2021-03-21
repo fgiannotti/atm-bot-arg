@@ -27,7 +27,8 @@ def respond():
    msg_id = message.message_id
 
    # Telegram understands UTF-8, so encode text for unicode compatibility
-   text = message.text.encode('utf-8').decode()
+   if message.text:
+      text = message.text.encode('utf-8').decode()
    # for debugging purposes only
    print("got text message :", text)
    # the first time you chat with the bot AKA the welcoming message
@@ -53,7 +54,8 @@ def respond():
       print(message)
       if not message.location:
          print("location not found")
-         bot.sendMessage(chat_id=chat_id, text="location not found", reply_to_message_id=msg_id)
+         bot.sendMessage(chat_id=chat_id, text="Location not found", reply_to_message_id=msg_id)
+         bot.
          return 'ok'
       records = dao.SearchByNetwork(message.location.latitude,message.location.longitude, "link")
       print(records)
