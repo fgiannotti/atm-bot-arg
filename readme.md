@@ -10,3 +10,5 @@ To use the bot: https://t.me/atm_arg_bot
 Steps to use:
     1. Specify Network (we only support "BANELCO" or "LINK") (commands banelco or link are available)
     2. Send your position to the bot, and it will post the closest 3 ATMs around a 500mts radius.
+
+Python version used: 3.9

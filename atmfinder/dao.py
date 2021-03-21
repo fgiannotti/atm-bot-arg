@@ -79,7 +79,6 @@ def set_network_chosen_for_user(network: str, chatID:int):
     finally:
         # closing database connection.
         if db:
-            cursor.
             cursor.close()
             db.close()
             print("[DAO][set_network_chosen_for_user] PostgreSQL connection is closed")
