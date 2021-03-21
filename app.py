@@ -36,7 +36,7 @@ def respond():
    elif "/banelco" in text.lower() or "/link" in text.lower():
         #call atm bot find atms
         print("BANCOOOOS")
-        records = dao.searchAll()
+        records = dao.SearchAll()
         print(records)
         
    else:

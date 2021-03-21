@@ -1,13 +1,11 @@
 import psycopg2
 
-# Connect to your postgres DB
-print("DAO CALLED")
 
-def searchAll():
+def SearchAll():
 	
 	try:
 		db = psycopg2.connect(dbname="dehk8k9ckm1b5r", user="ulnxxperftvpyj", password="9d6f464e63dc1b36466508b5a2d1c2b8cb172e20bc29677fd4556940491b7dc3", host="ec2-18-214-208-89.compute-1.amazonaws.com")
-		cursor = DB.cursor()
+		cursor = db.cursor()
 		query = "select * from cajeros-automaticos top 10"
 
 		cursor.execute(query)
@@ -28,6 +26,6 @@ def searchAll():
 		if connection:
 			cursor.close()
 			connection.close()
-			print("PostgreSQL connection is closed")
+			print("[DAO][SearchALL] PostgreSQL connection is closed")
    
 	return records
