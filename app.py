@@ -99,16 +99,6 @@ def respond():
       return 'ok'
 
    else:
-      try:
-         # clear the message we got from any non alphabets
-         text = re.sub(r"\W", "_", text)
-         url = "https://api.adorable.io/avatars/285/{}.png".format(text.strip())
-
-         bot.sendMessage(chat_id=chat_id, text="Command not found. Have a random picture instead :)", reply_to_message_id=msg_id)
-         bot.sendPhoto(chat_id=chat_id, photo=url, reply_to_message_id=msg_id)
-      except Exception as e:
-         print(e)
-         # if things went wrong
          bot.sendMessage(chat_id=chat_id, text="Command not found :)", reply_to_message_id=msg_id)
 
    return 'ok'
