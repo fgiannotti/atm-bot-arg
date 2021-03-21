@@ -2,8 +2,8 @@ from flask import Flask, request
 import telegram
 import re
 import time
-from atmfinder.credentials import bot_token, bot_user_name,URL
 import atmfinder.dao as dao
+from atmfinder.credentials import bot_token, bot_user_name,URL
 global bot
 global TOKEN
 TOKEN = bot_token
